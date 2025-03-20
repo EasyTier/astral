@@ -1,5 +1,8 @@
 # AstralET 游戏联机工具
 
+
+[临时发布位置](https://github.com/ldoubil/astral)
+
 [![GitHub](https://img.shields.io/badge/GitHub-AstralET-blue)](https://github.com/ldoubil/astral)
 
 
