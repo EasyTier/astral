@@ -387,6 +387,12 @@ class AppConfig {
     return _instance;
   }
 
+  // 在AppConfig类中添加静态方法setConfigDir
+  static void setConfigDir(String dirPath) {
+    _configDirectory = dirPath;
+    print('配置目录已设置为: $_configDirectory');
+  }
+
   AppConfig._internal() {
     // 注册所有配置类型
     _registerConfig<ThemeConfig>(
@@ -451,8 +457,10 @@ class AppConfig {
     if (_initialized) return;
 
     try {
-      // 获取可执行文件所在目录作为Hive数据库存储位置
-      _configDirectory = File(Platform.resolvedExecutable).parent.path;
+      // 如果没有预先设置配置目录，则尝试获取可执行文件所在目录
+      if (!_configDirectory.isNotEmpty) {
+        _configDirectory = File(Platform.resolvedExecutable).parent.path;
+      }
       print('配置目录: $_configDirectory');
 
       // 初始化Hive
@@ -478,6 +486,7 @@ class AppConfig {
       print('AppConfig初始化失败: $e');
       // 尝试使用备用目录
       try {
+        // 使用应用文档目录作为备用目录
         final appDocDir = Directory(path.join(
           Directory.current.path,
           'config',
